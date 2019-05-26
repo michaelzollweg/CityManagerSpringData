@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="~{includes/bootstrapMeta :: bootstrapMeta}" />
+<title>City Manager</title>
+<div th:replace="~{includes/bootstrapCSS :: bootstrapCSS}" />
+</head>
+<body>
+	<div class="container" role="main">
+
+
+
+		<!--  1 simple button ----------------------------------------------------------- -->
+		<div class="row">
+			<div class="col-md-10">
+				<h1>Spring Data JPA</h1>
+			</div>
+
+			<div class="col-md-2">
+				<a href="fillCityList">
+					<button type="button" class="btn btn-success">Fill List</button>
+				</a>
+			</div>
+		</div>
+
+		<!--  search by Id ----------------------------------------------------------- -->
+		<form action="findById" method="post">
+			<div class="form-row">
+				<div class="form-group col-sm-12">
+					<label for="id">Find by Id:</label>
+					<input id="id" type="text" class="form-control" name="id">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-sm-12">
+					<input class="btn btn-primary" type="submit" value="Do it">
+				</div>
+			</div>
+		</form>
+
+		<!--  paging example ----------------------------------------------------------- -->
+		<form action="getPage" method="post">
+			<div class="form-row">
+				<div class="form-group col-sm-6">
+					<label for="page">Page:</label>
+					<input id="page" type="text" class="form-control" name="page">
+				</div>		
+				<div class="form-group col-sm-6">
+					<label for="size">Size:</label>
+					<input id="size" type="text" class="form-control" name="size">	
+				</div>
+			</div>	
+			<div class="form-row">
+				<div class="form-group col-sm-12">
+			  		<input class="btn btn-primary" type="submit" value="Do it">
+				</div>
+			</div>
+		</form>
+
+
+		<!--  Search + Fill ----------------------------------------------------------- -->
+			<form method="post" action="find">
+				<div class="form-row">
+					<div class="form-group col-sm-6">
+						<label for="searchType">Search:</label> 
+						<select id="searchType" class="form-control" name="searchType">
+							<option value="query1" selected="selected">Show all cities</option>							
+							<option value="query2">Filter cities by city name</option>
+							<option value="query3">Filter cities by country name</option>
+							<option value="query4">Filter cities by city name or country name</option>
+							<option value="query5">search with named query</option>
+							<option value="query6">count cities by city name</option>
+							<option value="query7">delete cities with given city name</option>
+							<option value="query8">delete all cities from continent</option>
+							<option value="query9">list of cities where city name or country name contains a given searchstring</option>
+							<option value="query10">order list by city name</option>
+							<option value="query11">Sort all cites by city name ascending (top 10)</option>
+							<option value="query12">sort cities by city name @ continent</option>
+							<option value="query13">not more than 100 000 inhabitants </option>
+							<option value="query14">between 100000 and 1000000 inhabitants</option>
+							<option value="query15">Filter cities by continent </option>
+						</select>
+					</div>
+					<div class="form-group col-sm-6">
+						<label for="searchString">SearchString:</label>
+						<input id="searchString" class="form-control" type="text" name="searchString">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-sm-12">
+						<input class="btn btn-primary" type="submit" value="Do it">	
+					</div>
+				</div>
+			</form>
+
+			<!--  Search + Fill ----------------------------------------------------------- -->
+			<h3>Count: <span th:text="${count}"></span></h3>
+
+		<div class="row">
+			<div class="col-md-10 offset-md-1">
+
+				<table data-toggle="table" class="table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>City Name</th>
+							<th>Country Name</th>
+							<th>State Name</th>
+							<th>Population</th>
+							<th>Continent</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--  list all items ----------------------------------------------------------- -->
+						<tr th:each="city : ${cities}">
+							<td th:text="${city.id}"></td>
+							<td th:text="${city.cityName}"></td>
+							<td th:text="${city.countryName}"></td>
+							<td th:text="${city.stateName}"></td>
+							<td th:text="${city.population}"></td>
+							<td th:text="${city.continent.name}"></td>
+							<td><a th:href="@{/delete(id=${city.id})}" class="btn btn-danger">Delete</a></td>
+							
+						</tr>
+						<!--  list all items ----------------------------------------------------------- -->
+					</tbody>
+				</table>
+								
+			</div>
+		</div>
+	</div>
+	<!--  End of container -->
+	<div th:replace="~{includes/bootstrapJS :: bootstrapJS}" />
+</body>
+</html>
