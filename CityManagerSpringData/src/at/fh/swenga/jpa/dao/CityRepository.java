@@ -35,5 +35,12 @@ public interface CityRepository extends JpaRepository<CityModel, Integer> {
 	List<CityModel> deleteByContinentName(String searchString);
 
 	List<CityModel> findByOrderByCityName();
+
+	List<CityModel> findTop10ByOrderByCityName();
+
+	List<CityModel> findByContinentNameOrderByCityNameAsc(String searchString);
+
+	//@Query("SELECT e FROM CityModel AS e WHERE e.population <= {fn  CONVERT(INT,?1)}")
+	//List<CityModel> findByPopulationLessThanEqual(String searchString);
 	
 }

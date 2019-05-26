@@ -82,21 +82,27 @@ public class CityController {
 			cities = cityRepository.findByCityNameContainingOrCountryNameContainingAllIgnoreCase(searchString,searchString);
 			break;
 		case "query10":
+			//order list by city name
 			cities = cityRepository.findByOrderByCityName();
 			break;
 		case "query11":
-			//cities = cityRepository.;
+			//Sort all cites by city name ascending (top 10)
+			cities = cityRepository.findTop10ByOrderByCityName();
 			break;
 		case "query12":
-			//cities = cityRepository.;
+			//sort cities by city name @ continent
+			cities = cityRepository.findByContinentNameOrderByCityNameAsc(searchString);
 			break;
 		case "query13":
-			//cities = cityRepository.;
+			//not more than 100 000 inhabitants 
+			//cities = cityRepository.findByPopulationLessThanEqual(searchString);
 			break;
 		case "query14":
+			//between 100000 and 1000000 inhabitants
 			//cities = cityRepository.;
 			break;
 		case "query15":
+			//Filter cities by continent
 			//cities = cityRepository.;
 			break;
 
