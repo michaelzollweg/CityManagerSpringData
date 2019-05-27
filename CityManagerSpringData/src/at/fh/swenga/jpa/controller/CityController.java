@@ -95,15 +95,15 @@ public class CityController {
 			break;
 		case "query13":
 			//not more than 100 000 inhabitants 
-			//cities = cityRepository.findByPopulationLessThanEqual(searchString);
+			cities = cityRepository.findByPopulationLessThanEqual(searchString);
 			break;
 		case "query14":
-			//between 100000 and 1000000 inhabitants
-			//cities = cityRepository.;
+			//between 100 000 and 250 000 inhabitants
+			cities = cityRepository.findByPopulationBetween();
 			break;
 		case "query15":
 			//Filter cities by continent
-			//cities = cityRepository.;
+			cities = cityRepository.findByContinentName(searchString);
 			break;
 
 		default:
@@ -130,9 +130,7 @@ public class CityController {
 		}
 		return "index";
 	}
-
-
-
+	
 	
 	@RequestMapping("/fillCityList")
 	@Transactional
@@ -144,7 +142,7 @@ public class CityController {
 		
 		for(int i=0;i<100;i++) {
 			if (i%10==0) {
-				String continentName=df.getBusinessName();
+				String continentName=df.getRandomWord(8,true);
 				continent=continentRepository.findFirstByName(continentName);
 				if (continent==null) {
 					continent = new ContinentModel(continentName);

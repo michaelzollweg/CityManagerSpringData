@@ -1,12 +1,9 @@
 package at.fh.swenga.jpa.dao;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +37,12 @@ public interface CityRepository extends JpaRepository<CityModel, Integer> {
 
 	List<CityModel> findByContinentNameOrderByCityNameAsc(String searchString);
 
-	//@Query("SELECT e FROM CityModel AS e WHERE e.population <= {fn  CONVERT(INT,?1)}")
-	//List<CityModel> findByPopulationLessThanEqual(String searchString);
+	@Query("SELECT e FROM CityModel AS e WHERE e.population <= cast(:searchString as int)")
+	List<CityModel> findByPopulationLessThanEqual(@Param("searchString") String searchString);
+
+	@Query("SELECT e FROM CityModel AS e WHERE e.population BETWEEN 100000 AND 250000")
+	List<CityModel> findByPopulationBetween();
+
+	List<CityModel> findByContinentName(String searchString);
 	
 }
