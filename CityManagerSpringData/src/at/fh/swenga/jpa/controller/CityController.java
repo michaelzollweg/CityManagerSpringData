@@ -140,18 +140,22 @@ public class CityController {
 		
 		ContinentModel continent = null;
 		
+		String [] continentList = {"Europe","North America","South America", "Africa","Asia","Australia"};
+		String [] stateList = {"Styria","Carinthia","Tyrol", "Salzburg","Upper Austria","Lower Austria","Vienna"};
+		String [] countryList = {"Austria","Germany","Italy", "France","USA","Canada","Brasil","Colombia","Egypt","Russia","Mongolia","India","Pakistan","Australia","Japan","North Korea"};
+		
+		
 		for(int i=0;i<100;i++) {
 			if (i%10==0) {
-				String continentName=df.getRandomWord(8,true);
+				String continentName=df.getItem(continentList);
 				continent=continentRepository.findFirstByName(continentName);
 				if (continent==null) {
 					continent = new ContinentModel(continentName);
 				}
 			}
 			
-
-			CityModel cityModel = new CityModel(df.getCity(),df.getStreetName(),df.getLastName(),df.getNumberBetween(10, 1000000));
-			//CityModel cityModel = new CityModel(df.getCity(),df.getStreetName(),df.getLastName(),df.getNumber());
+			CityModel cityModel = new CityModel(df.getCity(),df.getItem(countryList),df.getItem(stateList),df.getNumberBetween(10, 1000000));
+			//CityModel cityModel = new CityModel(df.getCity(),df.getStreetName(),df.getLastName(),df.getNumberBetween(10, 1000000));
 			cityModel.setContinent(continent);
 			cityRepository.save(cityModel);
 		}
